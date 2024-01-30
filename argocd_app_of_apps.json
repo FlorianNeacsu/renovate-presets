@@ -1,0 +1,23 @@
+{
+  "packageRules": [
+    {
+      "matchManagers": ["regex"],
+      "additionalBranchPrefix": "{{packageFileDir}}-",
+      "commitMessagePrefix": "{{#if packageFileDir}}CANARY(deps): ({{packageFileDir}}){{else}}ALL(deps): {{/if}} ",
+      "addLabels": ["renovate", "{{#if packageFileDir}}canary{{else}}all{{/if}}"],
+      "dependencyDashboardApproval": false,
+      "automerge": false,
+      "internalChecksFilter": "strict"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "datasourceTemplate": "github-releases",
+      "fileMatch": ["(^|/)values\\.yaml$"],
+      "matchStrings": [
+        " +(version|tag): +(?<currentValue>[^'\" ]+) +# renovate: depName=(?<depName>[^ \\n]+) +(extractVersion=(?<extractVersion>[^\\n]+))?"
+      ]
+    }
+  ]
+}
